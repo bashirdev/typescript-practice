@@ -17,9 +17,9 @@ const example={
 example.prop1= 'Bashir'
 
 
-type Guitarist={
-    name:string,
-    active?:boolean, //optional
+interface Guitarist{
+    name?:string,
+    active:boolean, //optional
     albums:(string | number) []
 }
 
@@ -30,7 +30,24 @@ let evh:Guitarist={
 }
 let jhm:Guitarist={
     name:'ahammed',
+    active:false,
     albums:[195, 16555,'5dasdsahgjhg']
 }
 
+const greetGuiterist=(guiterist:Guitarist, secondGuiterRist:Guitarist)=>{
+    return `Hello ${guiterist.name} and ${secondGuiterRist.name}`
+}
+
+console.log(greetGuiterist(evh, jhm));
+
+//Enums
+enum Grade {
+    U=1,
+    D,
+    C,
+    B,
+    A,
+}
+
+console.log(Grade.U);
 
