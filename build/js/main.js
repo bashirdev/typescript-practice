@@ -1,36 +1,69 @@
 "use strict";
-let myTuple = ['Bashir', 23, true];
-let newArr = ['some'];
-newArr = myTuple;
-let myObj;
-myObj = [];
-console.log(typeof myObj);
-const example = {
-    prop1: 'dave',
-    prop2: true
+//Literal types
+let myName;
+let userName;
+userName = 'Dave';
+// functions 
+const add = (a, b) => {
+    return a + b;
 };
-example.prop1 = 'Bashir';
-let evh = {
-    name: 'Bashir',
-    active: false,
-    albums: [195, 165, '5dasdsa']
+const greet = (message) => {
+    console.log(message);
 };
-let jhm = {
-    name: 'ahammed',
-    active: false,
-    albums: [195, 16555, '5dasdsahgjhg']
+greet('Hello Bashir');
+greet(add(45, 85));
+let substract = function (c, d) {
+    return c - d;
 };
-const greetGuiterist = (guiterist, secondGuiterRist) => {
-    return `Hello ${guiterist.name} and ${secondGuiterRist.name}`;
+greet(substract(5, 2));
+//
+const multiply = function (c, d) {
+    return c * d;
 };
-console.log(greetGuiterist(evh, jhm));
-//Enums
-var Grade;
-(function (Grade) {
-    Grade[Grade["U"] = 1] = "U";
-    Grade[Grade["D"] = 2] = "D";
-    Grade[Grade["C"] = 3] = "C";
-    Grade[Grade["B"] = 4] = "B";
-    Grade[Grade["A"] = 5] = "A";
-})(Grade || (Grade = {}));
-console.log(Grade.U);
+greet(multiply(4, 2));
+//optional parameters
+const addAll = (a, b, c) => {
+    if (typeof c !== 'undefined') {
+        return a + b + c;
+    }
+    return a + b;
+};
+//default param value
+const sumAll = (a, b, c = 5) => {
+    if (typeof c !== 'undefined') {
+        return a + b + c;
+    }
+    return a + b;
+};
+greet(addAll(2, 2));
+greet(sumAll(2, 2));
+//Rest parameters
+const total = (a, ...nums) => {
+    return a * nums.reduce((prev, curr) => prev + curr, 0);
+};
+greet(total(2, 1, 4, 6, 5));
+// never type == error 
+const createError = (errMeg) => {
+    throw new Error(errMeg);
+};
+const infinite = () => {
+    let i = 1;
+    while (true) {
+        i++;
+        if (i > 100)
+            break;
+    }
+};
+//custom type guard
+const isNumber = (value) => {
+    return typeof value === 'number' ? true : false;
+};
+//use of the never type
+const numberOrString = (value) => {
+    if (typeof value === 'string') {
+        return 'string';
+    }
+    if (isNumber(value))
+        return 'number';
+    return createError('This should never happen!');
+};

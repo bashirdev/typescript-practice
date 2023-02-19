@@ -1,53 +1,102 @@
+//Type Aliases
+type stringOrNumber = string | number
 
-let myTuple: [string, number, boolean] = ['Bashir', 23, true]
+type stringOrNumberArray= (string | number) []
 
-let newArr:any = ['some']
-
-newArr = myTuple
-
-let myObj:object
-myObj=[]
-console.log(typeof myObj);
-
-const example={
-    prop1:'dave',
-    prop2:true
-}
-
-example.prop1= 'Bashir'
-
-
-interface Guitarist{
-    name?:string,
-    active:boolean, //optional
-    albums:(string | number) []
-}
-
-let evh:Guitarist={
+type Guiterist = {
     name:'Bashir',
-    active:false,
-    albums:[195, 165,'5dasdsa']
-}
-let jhm:Guitarist={
-    name:'ahammed',
-    active:false,
-    albums:[195, 16555,'5dasdsahgjhg']
+    active:true,
+    albums:stringOrNumberArray
 }
 
-const greetGuiterist=(guiterist:Guitarist, secondGuiterRist:Guitarist)=>{
-    return `Hello ${guiterist.name} and ${secondGuiterRist.name}`
+//Literal types
+
+let myName:'Bash'
+let userName:'Dave' | 'John' | 'amy'
+userName= 'Dave'
+
+// functions 
+const add =(a:number,b:number): number=>{
+    return a + b
 }
 
-console.log(greetGuiterist(evh, jhm));
 
-//Enums
-enum Grade {
-    U=1,
-    D,
-    C,
-    B,
-    A,
+const greet=(message:any):void=>{
+    console.log(message); 
+    
+}
+greet('Hello Bashir')
+greet(add(45,85));
+
+let substract= function(c:number, d:number):number{
+     return c-d
 }
 
-console.log(Grade.U);
+greet(substract(5,2));
 
+// type way
+type mathFunction = (a:number , b:number) => number
+
+// interface way
+interface mathFunctions {(a:number , b:number) :number}
+//
+const multiply:mathFunctions=function(c,d){
+    return c * d
+}
+
+greet(multiply(4,2))
+
+//optional parameters
+const addAll =(a:number, b:number, c?:number):number=>{
+    if(typeof c !== 'undefined'){
+        return a+b+c
+    }
+    return a+b
+
+}
+//default param value
+const sumAll =(a:number, b:number, c:number=5):number=>{
+    if(typeof c !== 'undefined'){
+        return a+b+c
+    }
+    return a+b
+
+}
+
+greet(addAll(2,2))
+greet(sumAll(2,2))
+
+//Rest parameters
+const total=(a:number, ...nums:number[]):number=>{
+    return a * nums.reduce((prev, curr)=> prev + curr,0)
+}
+
+greet(total(2,1,4,6,5))
+
+// never type == error 
+const createError=(errMeg:string)=>{
+    throw new Error(errMeg)
+}
+
+const infinite=()=>{
+    let i:number=1
+    while(true){
+        i++
+        if(i > 100) break
+    }
+}
+
+//custom type guard
+const isNumber=(value:any):boolean=>{
+    return typeof value === 'number' ? true : false
+}
+
+//use of the never type
+const numberOrString=(value:number | string): string=>{
+    if(typeof value === 'string'){
+        return 'string'
+    }
+    if(isNumber(value)) return 'number'
+
+    return createError('This should never happen!')
+}
